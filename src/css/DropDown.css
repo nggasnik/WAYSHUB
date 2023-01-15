@@ -1,0 +1,19 @@
+.dropItem1 {
+  margin-left: -3px;
+  color: black;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dropItem2 {
+  margin-left: 0;
+  color: black;
+  display: flex;
+  align-items: center;
+}
+
+.dropItem1:hover, .dropItem2:hover {
+  background-color: #141414;
+  text-decoration: none;
+}

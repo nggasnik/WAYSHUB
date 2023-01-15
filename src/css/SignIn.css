@@ -1,0 +1,16 @@
+.formCont .control {
+  background-color: rgba(210, 210, 210, 0.25);
+  border: 2px solid #BCBCBC;
+  border-radius: 5px;
+  color: white;
+}
+
+.formCont .control:hover {
+  background-color: rgb(150, 150, 150);
+  transition: 0.5s;
+}
+
+.formCont .control:focus {
+  color: white;
+  background-color: rgba(210, 210, 210, 0.25);
+}

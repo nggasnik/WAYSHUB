@@ -1,0 +1,62 @@
+/* Home */
+.home-container {
+  display: 'flex';
+  background: #0B0B0B;
+  height: 100%;
+}
+
+.home-body {
+  display: flex;
+  justify-content: start;
+  height: 100%;
+}
+
+.home-body-wrapper {
+  margin: 80px 40px 0;
+  flex-wrap: wrap;
+}
+
+.home-card {
+  width: 300px;
+  padding: 15px;
+}
+
+.home-card .home-card-head {
+  width: 100%;
+}
+
+.home-card-head img {
+  width: 100%;
+  height: 170px;
+}
+
+.home-card-head h4 {
+  font-size: 20px;
+}
+
+.home-card-body {
+  margin-top: 10px;
+}
+
+.home-card-body h4 {
+  color: white;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.home-card-body p {
+  color: #555555;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 15px 0 0;
+}
+
+.home-card-body .view-time {
+  display: flex;
+}
+
+.view-time img {
+  margin-right: 10px;
+}
+
+/* Responsivitas */

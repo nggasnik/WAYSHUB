@@ -1,0 +1,100 @@
+.my-channel-container {
+  background-color: #0B0B0B;
+  height: 100vh;
+}
+
+.my-channel-main {
+  margin-top: 80px;
+  background-color: #0B0B0B;
+}
+
+.my-channel-banner {
+  width: 1349px;
+  display: flex;
+  justify-content: center;
+}
+
+.my-channel-banner img {
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+}
+
+.my-channel-body {
+  display: flex;
+  justify-content: center;
+}
+
+.my-channel-body-wrapper {
+  width: 1200px;
+}
+
+.my-channel-body-header {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.my-channel-body-header .channel-left-side {
+  display: flex;
+
+}
+
+.channel-left-side .channel-left-text {
+  margin-left: 10px;
+}
+
+.channel-left-side .channel-left-text p:first-child {
+  color: white;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 5px 0 0;
+}
+
+.channel-left-side .channel-left-text p:nth-child(2) {
+  color: #F0F0F0;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.channel-right-side {
+  display: flex;
+  align-items: center;
+}
+
+.channel-right-side button {
+  background-color: #FF7A00;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  border-radius: 5px;
+  border: 1px solid #FF7A00;
+}
+
+.channel-right-side button:hover {
+  box-shadow: 5px 5px 15px #633000;
+  transition: 0.5s;
+}
+
+.my-channel-body-body {
+  display: flex;
+  margin: 10px 0 0 5px;
+}
+
+.my-channel-body-body p {
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  margin-right: 20px;
+}
+
+.my-channel-videos {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.my-channel-description {
+  margin-top: 20px;
+}

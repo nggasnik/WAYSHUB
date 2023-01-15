@@ -1,0 +1,110 @@
+.header-edit h2 {
+  color: white;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.header-edit {
+  margin-bottom: 20px;
+}
+
+.edit-body {
+  display: flex;
+  justify-content: center;
+}
+
+.edit-body-wrapper {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  margin-top: 70px;
+}
+
+.main-edit-channel {
+  width: 1200px;
+  margin-top: 40px;
+}
+
+.edit-form {
+  display: flex;
+}
+
+.form-edit-control-top {
+  background-color: rgba(210, 210, 210, 0.25);
+  border: 2px solid #BCBCBC;
+  border-radius: 5px;
+  color: white;
+}
+
+.form-edit-control-top:hover {
+  background-color: rgb(150, 150, 150);
+  transition: 0.5s;
+}
+
+.form-edit-control-top:focus {
+  background-color: rgba(210, 210, 210, 0.25);
+  color: white;
+}
+
+.save-button {
+  background-color: #FF7A00;
+  width: 100%;
+  padding: 7px 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: white;
+  border-radius: 5px;
+  border: 1px solid #FF7A00;
+}
+
+.save-button:hover {
+  box-shadow: 5px 5px 15px #633000;
+  transition: 0.5s;
+}
+
+.edit-file {
+  width: 400px;
+}
+
+/* Responsivitas */ 
+@media (max-width: 360px) {
+  .edit-body-wrapper {
+    width: 360px;
+  }
+
+  .edit-form {
+    display: block;
+  }
+
+  .edit-form .form-edit-control-top {
+    margin-bottom: 10px;
+    width: 330px;
+  }
+
+  .main-edit-channel {
+    width: 330px;
+  }
+}
+
+@media (max-width: 400px) {
+  .edit-body-wrapper {
+    width: 340px;
+  }
+
+  .edit-form {
+    display: block;
+  }
+
+  .edit-form .form-edit-control-top {
+    margin-bottom: 10px;
+    width: 320px;
+  }
+
+  .edit-file {
+    width: 320px;
+  }
+
+  .main-edit-channel {
+    width: 320px;
+  }
+}
