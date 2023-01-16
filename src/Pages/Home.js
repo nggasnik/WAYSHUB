@@ -22,7 +22,7 @@ import '../css/Home.css'
 const minWidth = {
   display: 'flex',
   justifyContent: 'start',
-  width: '1100px',
+  width: '1500px',
   transition: '0.5s',
   position: 'relative',
   left: '280px'
@@ -30,9 +30,9 @@ const minWidth = {
 
 const maxWidth = {
   display: 'flex',
-  justifyContent: 'space-between',
+  justifyContent: 'start',
   position: 'relative',
-  left: '50px',
+  left: '30px',
   transition: '0.5s',
 }
 

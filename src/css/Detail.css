@@ -77,10 +77,12 @@
   justify-content: center;
   flex-wrap: wrap;
   width: 500px;
+  height: 100%;
 }
 
 .home-card-detail {
   width: 420px;
+  height: 320px;
   margin-bottom: 10px;
 }
 

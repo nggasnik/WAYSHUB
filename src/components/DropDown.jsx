@@ -56,7 +56,7 @@ function DropDownAll() {
   const [state, dispatch] = useContext(UserContext)
   const onClick = async () => {
     Swal.fire({
-      title: 'Do you want really want to logout?',
+      title: 'Do you really want to logout?',
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: 'Yes',

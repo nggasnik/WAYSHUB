@@ -78,7 +78,7 @@ const EditChannel = ({ setOpen, open }) => {
           'success'
         )
       }
-      console.log(response.data)
+      navigate('/my-channel')
     } catch (err) {
       alert("Update Failed")
       console.log(err)

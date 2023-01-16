@@ -102,7 +102,21 @@ const ContentCreator = ({ setOpen, open }) => {
                 
                 <div className="my-channel-body-header">
                   <div className="channel-left-side">
-                    <img src={Profile} alt="profile" />
+
+                    {
+                        getChannelById?.photo ? (
+                          <img src={getChannelById?.photo} alt="profile" style={{
+                            width: '100px',
+                            height: '100px'
+                          }}/>
+                        ) : (
+                          <img src={Profile} alt="profile" style={{
+                            width: '100px',
+                            height: '100px'
+                          }}/>
+                        )
+                      }
+
                     <div className="channel-left-text">
                       <p>
                         {getChannelById?.channelName}
@@ -140,7 +154,7 @@ const ContentCreator = ({ setOpen, open }) => {
                   </div>
                 </div>
                 <hr style={{
-                  margin: 0,
+                  margin: '10px 0px',
                   backgroundColor: 'white',
                   height: '4px'
                 }}/>

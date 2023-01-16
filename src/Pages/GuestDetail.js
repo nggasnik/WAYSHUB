@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom'
 import { API } from '../config/api'
 import { useQuery } from 'react-query'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 // External CSS
 import '../css/Detail.css'
@@ -18,6 +18,8 @@ import Time from '../Images/Icons/time.png'
 
 const GuestDetail = ({ setOpen, open }) => {
 
+  const navigate = useNavigate()
+
   // Mengambil video berdasarkan id
   const { id } = useParams()
   const {data: getVideoById} = useQuery('videoGuestIdCache', async () => {
@@ -30,6 +32,11 @@ const GuestDetail = ({ setOpen, open }) => {
     const response = await API.get(`/videos`)
     return response.data.data
   })
+
+  // HandleClick untuk channel
+  const handleClick = () => {
+    navigate('/sign-in')
+  }
 
   return (
     <div className="detail-container">
@@ -95,7 +102,12 @@ const GuestDetail = ({ setOpen, open }) => {
                 </div>
               </Link>
                 <div className="home-card-body">
-                  <p>
+                  <p
+                  onClick={() => handleClick()}
+                  style={{
+                    cursor: 'pointer'
+                  }}
+                  >
                     {video?.channel.channelName}
                   </p>
                   <div className="view-time">

@@ -102,6 +102,15 @@ const DetailPage = ({ setOpen, open }) => {
     }
   })
 
+  // Kondisi ketika meng-klik channel sendiri dan channel orang lain
+  const handleChannelClick = (channelId) => {
+    if (state?.user.id === channelId) {
+      navigate('/my-channel')
+    } else {
+      navigate(`/content-creator/${channelId}`)
+    }
+  }
+
   return (
     <div className="detail-container">
       <div className="side-navbar-container">
@@ -274,7 +283,7 @@ const DetailPage = ({ setOpen, open }) => {
           <div className='random-video'>
           {
             getAllVideos?.map(video => (
-              <div className="home-card-detail" style={{position: 'relative',}}>
+              <div className="home-card-detail" key={video?.id}>
               <Link
               to={`/detail-video/${video?.id}`}
               style={{
@@ -290,7 +299,12 @@ const DetailPage = ({ setOpen, open }) => {
                 </div>
               </Link>
                 <div className="home-card-body">
-                  <p>
+                  <p
+                  onClick={() => handleChannelClick(video?.id)}
+                  style={{
+                    cursor: 'pointer'
+                  }}
+                  >
                     {video?.channel.channelName}
                   </p>
                   <div className="view-time">
