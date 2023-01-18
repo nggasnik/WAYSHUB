@@ -2,8 +2,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 import { UserContext } from '../context/UserContext'
-import { API } from '../config/api'
-import { useQuery } from 'react-query'
 
 // External CSS
 import '../css/SideBar.css'
@@ -27,18 +25,12 @@ const goRight = {
   transition: '0.5s'
 }
 
-const SideBar = ({ open, setOpen }) => {
+const SideBar = ({ open, setOpen, subs }) => {
 
   const navigate = useNavigate()
   const [channel, setOpenCnl] = useState(false)
   const toggle = () => setOpenCnl(!channel)
   const [state] = useContext(UserContext)
-
-  // Mengambil data subscription
-  const {data: subscription} = useQuery('subscriptionChannelId', async () => {
-    const response = await API.get(`/channel/${state?.user.id}`)
-    return response.data.data.subscription
-  })
 
   return (
     <div style={open ? goLeft : goRight} className='sidebar-container'>
@@ -62,7 +54,7 @@ const SideBar = ({ open, setOpen }) => {
             Channel
           </h2>
           {
-            subscription?.map(user => channel ? (
+            subs?.map(user => channel ? (
               <div key={user?.other_id}>
                 <Link 
                 to={`/content-creator/${user?.other_id}`}

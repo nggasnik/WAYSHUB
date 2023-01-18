@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom"
 import { useQuery } from "react-query"
 import { API } from "../config/api"
+import { CirclesWithBar } from "react-loader-spinner"
 
 // Components
 import SideBar from "../components/SideBar"
@@ -17,7 +18,7 @@ import '../css/Home.css'
 const minWidth = {
   display: 'flex',
   justifyContent: 'start',
-  width: '1500px',
+  width: '1100px',
   transition: '0.5s',
   position: 'relative',
   left: '280px'
@@ -31,10 +32,10 @@ const maxWidth = {
   transition: '0.5s',
 }
 
-const GuestHome = ({ setOpen, open }) => {
+const GuestHome = ({ setOpen, open, setSearch, search }) => {
 
   // Untuk mengambil semua video dari setiap channel
-  const {data: getAllVideos} = useQuery('videosGuestCache', async () => {
+  const {data: getAllVideos, isFetching} = useQuery('videosGuestCache', async () => {
     const response = await API.get('/videos')
     return response.data.data
   })
@@ -49,19 +50,43 @@ const GuestHome = ({ setOpen, open }) => {
     }
   }
 
+  if (isFetching) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
+      }}>
+        <CirclesWithBar
+        type="Puff"
+        color="#FF7A00"
+        height={100}
+        width={100}
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="home-container">
       <div className="side-navbar-container">
         <SideBar open={open} setOpen={setOpen}/>
       </div>
       <div className='navbar-container'>
-        <SearchBar setOpen={setOpen} open={open}/>
+        <SearchBar setOpen={setOpen} open={open} setSearch={setSearch}/>
       </div>
       <div className="home-body">
         <div style={open ? maxWidth : minWidth} className="home-body-wrapper">
 
           {
-            getAllVideos?.map(video => (
+            getAllVideos?.filter(video => {
+              if (search == "") {
+                return video
+              } else if (video.title.toLowerCase().includes(search?.toLowerCase())) {
+                return video
+              }
+            }).map(video => (
               <div className="home-card" key={video?.id}>
               <Link 
               onClick={() => handleViewCounter(video?.id)}

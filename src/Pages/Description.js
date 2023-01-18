@@ -4,6 +4,7 @@ import { useQuery } from "react-query"
 import { API } from '../config/api'
 import { useContext } from "react"
 import { UserContext } from "../context/UserContext"
+import { CirclesWithBar } from "react-loader-spinner"
 
 // Components
 import SideBar from "../components/SideBar"
@@ -19,10 +20,28 @@ import Profile from '../Images/Icons/profile-100px.png'
 const Description = ({ setOpen, open }) => {
 
   const [state] = useContext(UserContext)
-  const {data: getUserChannel} = useQuery('channelDescCache', async () => {
+  const {data: getUserChannel, isFetching} = useQuery('channelDescCache', async () => {
     const response = await API.get(`/channel/${state.user.id}`)
     return response.data.data
   })
+
+  if (isFetching) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
+      }}>
+        <CirclesWithBar
+        type="Puff"
+        color="#FF7A00"
+        height={100}
+        width={100}
+        />
+      </div>
+    )
+  }
 
   return (
     <div className="my-channel-container">

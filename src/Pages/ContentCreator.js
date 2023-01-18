@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { API } from "../config/api"
 import { useMutation, useQuery } from "react-query"
+import { CirclesWithBar } from "react-loader-spinner"
 
 // Components
 import SideBar from "../components/SideBar"
@@ -19,18 +20,17 @@ import Time from '../Images/Icons/time.png'
 import { useContext } from "react"
 import { UserContext } from "../context/UserContext"
 
-const ContentCreator = ({ setOpen, open }) => {
+const ContentCreator = ({ setOpen, open, subs, refetch }) => {
   // Untuk mengambil id user yang login
   const [state] = useContext(UserContext)
 
   // Mengambil database channel berdasarkan id
   const { id } = useParams()
-  const {data: getChannelById, refetch: channelRefetch} = useQuery('channelContentByIdCache', async () => {
+  const {data: getChannelById, refetch: channelRefetch, isFetching} = useQuery('channelContentByIdCache', async () => {
     const response = await API.get(`/channel/${id}`)
     return response.data.data
   })
   
-
   // Mengambil data subscription user yang login
   const {data: channelLogin, refetch: loginRefetch} = useQuery('channelLoginCache', async () => {
     const response = await API.get(`/channel/${state?.user.id}`)
@@ -39,12 +39,12 @@ const ContentCreator = ({ setOpen, open }) => {
 
   let channel = []
 
-    channelLogin?.filter(subs => {
+  channelLogin?.filter(subs => {
     if (subs.other_id == id) {
       channel.push(subs)
     }
   })
-  
+
   const [ channelId ] = channel
 
   // Post handle untuk mengirim data ke database
@@ -57,6 +57,7 @@ const ContentCreator = ({ setOpen, open }) => {
       if (response.status == 200 && plusSub.status == 200) {
         channelRefetch()
         loginRefetch()
+        refetch()
       }
     } catch (err) {
       alert("FAILED")
@@ -74,6 +75,7 @@ const ContentCreator = ({ setOpen, open }) => {
       if (response.status == 200 && plusSub.status == 200) {
         channelRefetch()
         loginRefetch()
+        refetch()
       }
     } catch (err) {
       alert("FAILED")
@@ -81,10 +83,28 @@ const ContentCreator = ({ setOpen, open }) => {
     }
   })
 
+  if (isFetching) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
+      }}>
+        <CirclesWithBar
+        type="Puff"
+        color="#FF7A00"
+        height={100}
+        width={100}
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="my-channel-container">
       <div className="side-navbar-container">
-        <SideBar open={open} setOpen={setOpen}/>
+        <SideBar open={open} setOpen={setOpen} subs={subs}/>
       </div>
       <div className='navbar-container'>
         <SearchBar setOpen={setOpen} open={open}/>

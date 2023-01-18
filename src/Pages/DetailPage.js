@@ -7,6 +7,7 @@ import { useContext, useState } from 'react'
 import { UserContext } from '../context/UserContext'
 import { Form, FloatingLabel } from 'react-bootstrap'
 import Swal from 'sweetalert2'
+import { CirclesWithBar } from 'react-loader-spinner'
 
 // External CSS
 import '../css/Detail.css'
@@ -48,7 +49,7 @@ const DetailPage = ({ setOpen, open }) => {
   })
 
   // Fetch Videos By Id
-  const {data: getVideoById} = useQuery('detailVideoIdCache', async () => {
+  const {data: getVideoById, isFetching} = useQuery('detailVideoIdCache', async () => {
     const response = await API.get(`/video/${id}`)
     return response.data.data
   })
@@ -109,6 +110,24 @@ const DetailPage = ({ setOpen, open }) => {
     } else {
       navigate(`/content-creator/${channelId}`)
     }
+  }
+
+  if (isFetching) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
+      }}>
+        <CirclesWithBar
+        type="Puff"
+        color="#FF7A00"
+        height={100}
+        width={100}
+        />
+      </div>
+    )
   }
 
   return (

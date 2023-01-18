@@ -1,5 +1,5 @@
 // Libraries
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { API } from '../config/api'
 import { useState } from 'react'
 import { useMutation } from 'react-query'

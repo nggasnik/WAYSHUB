@@ -4,6 +4,8 @@ import { API } from '../config/api'
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Form from 'react-bootstrap/Form'
+import { ThreeDots } from "react-loader-spinner"
+import Swal from "sweetalert2"
 
 // Components
 import SideBar from "../components/SideBar"
@@ -54,8 +56,16 @@ const AddVideo = ({ setOpen, open }) => {
       formData.append("description", form.description)
       formData.append("video", form.video)
 
-      const response = await API.post('/video', formData)
-      navigate('/my-channel')
+      if (form.title != "" && form.thumbnail != "" && form.description != "" && form.video != "") {
+        await API.post('/video', formData)
+        navigate('/my-channel')
+      } else {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Isi semua data',
+        })
+      }
+
     } catch (err) {
       console.log(err.response.data)
       alert("Upload failed")
@@ -125,7 +135,27 @@ const AddVideo = ({ setOpen, open }) => {
                 name="video"
                 />
             </Form.Group>
-            <button className="save-button" type="submit">Add</button>
+              {
+                handleSubmit.isLoading ? (
+                  <button 
+                    className="save-button" 
+                    type="submit" 
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center'
+                    }}
+                    disabled>
+                    <ThreeDots
+                    type="Puff"
+                    color="#ffffff"
+                    height={30}
+                    width={30}
+                    />
+                  </button>
+                  ) : (
+                    <button className="save-button" type="submit">Add</button>
+                )
+              }
             </Form>
           </div>
 

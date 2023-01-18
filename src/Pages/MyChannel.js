@@ -4,6 +4,7 @@ import { useQuery } from "react-query"
 import { API } from '../config/api'
 import { useContext } from "react"
 import { UserContext } from "../context/UserContext"
+import {CirclesWithBar} from "react-loader-spinner"
 
 // Components
 import SideBar from "../components/SideBar"
@@ -22,14 +23,8 @@ const MyChannel = ({ setOpen, open }) => {
 
   // Get Channel By Id
   const [state] = useContext(UserContext)
-  const {data: getChannel } = useQuery('channelCache', async () => {
+  const {data: getChannel, isFetching} = useQuery('channelCache', async () => {
     const response = await API.get(`/channel/${state.user.id}`)
-    return response.data.data
-  })
-  
-  // find Comments
-  const {data: getComments} = useQuery('commentCache', async () => {
-    const response = await API.get(`/comments`)
     return response.data.data
   })
 
@@ -41,6 +36,24 @@ const MyChannel = ({ setOpen, open }) => {
       alert("Error")
       console.log(err)
     }
+  }
+
+  if (isFetching) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
+      }}>
+        <CirclesWithBar
+        type="Puff"
+        color="#FF7A00"
+        height={100}
+        width={100}
+        />
+      </div>
+    )
   }
 
   return (

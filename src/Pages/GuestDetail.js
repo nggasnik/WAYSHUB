@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { API } from '../config/api'
 import { useQuery } from 'react-query'
 import { useParams, useNavigate } from 'react-router-dom'
+import { CirclesWithBar } from 'react-loader-spinner'
 
 // External CSS
 import '../css/Detail.css'
@@ -22,7 +23,7 @@ const GuestDetail = ({ setOpen, open }) => {
 
   // Mengambil video berdasarkan id
   const { id } = useParams()
-  const {data: getVideoById} = useQuery('videoGuestIdCache', async () => {
+  const {data: getVideoById, isFetching} = useQuery('videoGuestIdCache', async () => {
     const response = await API.get(`/video/${id}`)
     return response.data.data
   })
@@ -36,6 +37,24 @@ const GuestDetail = ({ setOpen, open }) => {
   // HandleClick untuk channel
   const handleClick = () => {
     navigate('/sign-in')
+  }
+
+  if (isFetching) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
+      }}>
+        <CirclesWithBar
+        type="Puff"
+        color="#FF7A00"
+        height={100}
+        width={100}
+        />
+      </div>
+    )
   }
 
   return (

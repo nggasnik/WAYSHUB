@@ -63,6 +63,7 @@ function DropDownAll() {
       denyButtonText: `No`,
     }).then((result) => {
       if (result.isConfirmed) {
+        localStorage.removeItem("token")
         dispatch({
           type: 'LOGOUT'
         })

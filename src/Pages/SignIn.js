@@ -33,7 +33,7 @@ const h2 = {
 const SignUp = () => {
 
   const navigate = useNavigate()
-  const [state, dispatch] = useContext(UserContext)
+  const [ , dispatch] = useContext(UserContext)
   const [form, setForm] = useState({
     email: "",
     password: ""

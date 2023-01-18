@@ -6,6 +6,7 @@ import { API } from "./config/api"
 import { UserContext } from "./context/UserContext"
 import { setAuthToken } from "./config/api"
 import { useContext } from "react"
+import { useQuery } from "react-query"
 
 // Components
 import PrivateRoute from "./components/PrivateRoutes"
@@ -23,16 +24,26 @@ import ContentCreator from "./Pages/ContentCreator"
 import GuestHome from "./Pages/GuestHome"
 import GuestDetail from "./Pages/GuestDetail"
 
+
 if (localStorage.token) {
   setAuthToken(localStorage.token)
 }
 
 function App() {
+
+    // Search Fitur
+    const [search, setSearch] = useState()
+
+  //  Mengambil data subscription
+  const {data: subscription, refetch: subsRefetch} = useQuery('subscriptionChannelId', async () => {
+    const response = await API.get(`/channel/${state?.user.id}`)
+    return response.data.data.subscription
+  })
+
   // SideBar State
   const [open, setOpen] = useState(false)
 
   const navigate = useNavigate()
-
   const [state, dispatch] = useContext(UserContext)
   
   useEffect(() => {
@@ -46,7 +57,6 @@ function App() {
     } else if (state.user.token) {
       navigate('/home')
     }
-
   }, [state])
   
   const checkUser = async () => {
@@ -82,7 +92,7 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/guest-home/" element={
-            <GuestHome setOpen={setOpen} open={open}/>
+            <GuestHome setOpen={setOpen} open={open} setSearch={setSearch} search={search}/>
           }/>
           <Route path="/guest-detail/:id" element={
             <GuestDetail setOpen={setOpen} open={open}/>
@@ -90,25 +100,25 @@ function App() {
 
           <Route element={<PrivateRoute />}>
             <Route path="/home" element={
-              <Home setOpen={setOpen} open={open}/>
+              <Home setOpen={setOpen} open={open} subs={subscription} refetch={subsRefetch} setSearch={setSearch} search={search}/>
             }/>
             <Route path="/detail-video/:id" element={
-              <DetailPage setOpen={setOpen} open={open}/>
+              <DetailPage setOpen={setOpen} open={open} subs={subscription} refetch={subsRefetch}/>
             }/>
             <Route path="/edit-channel" element={
-              <EditChannel setOpen={setOpen} open={open}/>
+              <EditChannel setOpen={setOpen} open={open} subs={subscription} refetch={subsRefetch}/>
             }/>
             <Route path="/addvideo" element={
-              <AddVideo setOpen={setOpen} open={open}/>
+              <AddVideo setOpen={setOpen} open={open} subs={subscription} refetch={subsRefetch}/>
             }/>
             <Route path="/my-channel" element={
-              <MyChannel setOpen={setOpen} open={open}/>
+              <MyChannel setOpen={setOpen} open={open} subs={subscription} refetch={subsRefetch}/>
             } />
             <Route path="/my-channel/description" element={
-              <Description setOpen={setOpen} open={open}/>
+              <Description setOpen={setOpen} open={open} subs={subscription} refetch={subsRefetch}/>
             } />
             <Route path="/content-creator/:id" element={
-              <ContentCreator setOpen={setOpen} open={open}/>
+              <ContentCreator setOpen={setOpen} open={open} subs={subscription} refetch={subsRefetch}/>
             } />
           </Route>
         </Routes>

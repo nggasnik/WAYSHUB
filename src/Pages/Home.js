@@ -5,6 +5,7 @@ import { API } from "../config/api"
 import { useNavigate } from "react-router-dom"
 import { useContext } from "react"
 import { UserContext } from "../context/UserContext"
+import { CirclesWithBar } from "react-loader-spinner"
 
 // Components
 import SideBar from "../components/SideBar"
@@ -17,12 +18,10 @@ import Time from '../Images/Icons/time.png'
 // External CSS
 import '../css/Home.css'
 
-
-
 const minWidth = {
   display: 'flex',
   justifyContent: 'start',
-  width: '1500px',
+  width: '1100px',
   transition: '0.5s',
   position: 'relative',
   left: '280px'
@@ -36,8 +35,8 @@ const maxWidth = {
   transition: '0.5s',
 }
 
+const Home = ({ setOpen, open, subs, setSearch, search }) => {
 
-const Home = ({ setOpen, open }) => {
   // React Hook
   const navigate = useNavigate()
 
@@ -45,7 +44,7 @@ const Home = ({ setOpen, open }) => {
   const [state] = useContext(UserContext)
 
   // Mengambil semua video dari setiap channel
-  const {data: getAllVideos} = useQuery('videosCache', async () => {
+  const {data: getAllVideos, isFetching} = useQuery('videosCache', async () => {
     const response = await API.get('/videos')
     return response.data.data
   })
@@ -69,19 +68,43 @@ const Home = ({ setOpen, open }) => {
     }
   }
 
+  if (isFetching) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
+      }}>
+        <CirclesWithBar
+        type="Puff"
+        color="#FF7A00"
+        height={100}
+        width={100}
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="home-container">
       <div className="side-navbar-container">
-        <SideBar open={open} setOpen={setOpen}/>
+        <SideBar open={open} setOpen={setOpen} subs={subs}/>
       </div>
       <div className='navbar-container'>
-        <SearchBar setOpen={setOpen} open={open}/>
+        <SearchBar setOpen={setOpen} open={open} setSearch={setSearch}/>
       </div>
       <div className="home-body">
         <div style={open ? maxWidth : minWidth} className="home-body-wrapper">
 
           {
-            getAllVideos?.map(video => (
+            getAllVideos?.filter(video => {
+              if (search == "") {
+                return video
+              } else if (video.title.toLowerCase().includes(search?.toLowerCase())) {
+                return video
+              }
+            }).map(video => (
               <div className="home-card" key={video?.id}>
               <Link 
               onClick={() => handleViewCounter(video?.id)}
@@ -101,8 +124,7 @@ const Home = ({ setOpen, open }) => {
                   <p
                   onClick={() => handleClick(video?.channel.id)}
                   style={{
-                    textDecoration: 'none', 
-                    color: 'white',
+                    textDecoration: 'none',
                     cursor: 'pointer',
                     color: '#555555'
                     }}>
